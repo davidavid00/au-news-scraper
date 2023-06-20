@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 beautifulsoup4
+=======
+beautifulsoup4
+>>>>>>> fd0641a16466acadfe1af12047bc73f902a7f6f1
 schedule
