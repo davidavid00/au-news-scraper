@@ -1,6 +1,9 @@
 # Ignore the credentials file
 credentials.txt
 
+# Ignore the database
+news_entries.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
