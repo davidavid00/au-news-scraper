@@ -13,7 +13,10 @@ import os
 import schedule
 import time
 
-# database varaibles
+#######################################
+# DATABASE CHECK/SETUP
+#######################################
+
 database_name = 'news_entries.db'
 table_name = 'articles'
 
@@ -49,21 +52,11 @@ if not database_exists():
 else:
     print(f"The database '{database_name}' already exists.")
 
-# Add email credentials from the credentials.txt file
-with open('credentials.txt', 'r') as file:
-    lines = file.readlines()
-    credentials = {}
-    for line in lines:
-        key, value = line.strip().split('=')
-        credentials[key] = value
 
-username = credentials['username']
-password = credentials['password']
-recipient_email = credentials['to']
-server = credentials['smtp']
-port = credentials['port']
-
-
+#######################################
+# Initiate Scrape
+#######################################
+keywords = ['Queensland']
 
 def news_scrape():
     # List of target news sites
@@ -77,9 +70,6 @@ def news_scrape():
         {'name': 'Stock Journal', 'url': 'https://www.stockjournal.com.au/news/'}
         # Add more news sites as needed
     ]
-
-    # Keywords to search for
-    keywords = ['Titanic']
 
     matching_articles = []
 
@@ -202,6 +192,9 @@ def news_scrape():
         database_update(matching_articles)
         # send_email_notification(matching_articles)
 
+#######################################
+# SEARCH THE DATABASE FOR EXISTING
+#######################################
 
 def database_update (articles):
     conn = sqlite3.connect(database_name)
@@ -233,8 +226,27 @@ def database_update (articles):
 
 # search_google()
 
+#######################################
+# SEND AN EMAIL
+#######################################
 
 def send_email_notification(article):
+
+     # Add email credentials from the credentials.txt file
+    with open('credentials.txt', 'r') as file:
+        lines = file.readlines()
+        credentials = {}
+        for line in lines:
+            key, value = line.strip().split('=')
+            credentials[key] = value
+
+    username = credentials['username']
+    password = credentials['password']
+    recipient_email = credentials['to']
+    server = credentials['smtp']
+    port = credentials['port']
+
+
 
     # Compose email 
     body = f"{article['site']} - {article['headline']}\n URL: {article['url']}"
@@ -259,6 +271,10 @@ def send_email_notification(article):
 
     except Exception as e:
         print(f"Error sending email notification: {str(e)}")
+
+#######################################
+# INITIATE AND SCHEDULE
+#######################################
 
 news_scrape()
 # Schedule the script to run every hour
