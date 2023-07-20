@@ -20,13 +20,13 @@ Once this has been installed, you will need to ensure `pip` is installed in your
 ### Set up the email notification
 In order to run the script, you will need to add your email credentials. You can clone or rename the credentials-template.txt to credentails.txt\
 You will need to update the sender email, password, SMTP, port and to fields with the below convention:
-
-username=username@domain.com\
-password=password\
-to=email@domain.com\
-smtp=smtp.domain.com\
+```
+username=username@domain.com
+password=password
+to=email@domain.com
+smtp=smtp.domain.com
 port=465
-
+```
 The main_function.py script will extract the credentials from the .txt file and use them for sending emails. The script will need to be open and running in your terminal in order for new articles to be examined. When the script runs, it will create a new database with all news headlines/descriptions that match the specified keywords. If the script stops running, and is restarted, emails will not be resent from news articles that already exist in the database.
 
 ### Run the script
